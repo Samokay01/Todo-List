@@ -1,7 +1,55 @@
-</body>
+    <footer class="main-footer">
+        <div class="footer-left">
+          <a href="#">Samokay</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="/js/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="/js/index.js"></script>
+  <!-- Template JS File -->
+  <script src="/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="/js/custom.js"></script>
 
-<footer>
-    Copyright 2024 The App Brewery
-</footer>
+  <script>
+    function toggleTaskCompletion(taskId) {
+      const checkbox = document.getElementById(`checkbox-${taskId}`);
+      const row = checkbox.closest('tr');
+      const tableBody = row.parentElement;
+
+      if (checkbox.checked) {
+        row.classList.add('completed-task');
+        tableBody.appendChild(row);
+      } else {
+        row.classList.remove('completed-task');
+        const rows = Array.from(tableBody.querySelectorAll('tr'));
+        rows.sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index));
+        rows.forEach(r => tableBody.appendChild(r));
+      }
+
+      // Send AJAX request to update task status
+      fetch(`/update-task-status/${taskId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ completed: checkbox.checked })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success) {
+          alert('Failed to update task status');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+  
+</body>
 
 </html>

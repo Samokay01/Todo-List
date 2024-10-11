@@ -1,10 +1,188 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>To Do List</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>ToDo List App</title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="/css/app.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-social/bootstrap-social.css">
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel='shortcut icon' type='image/x-icon' href='images/favicon.ico' />
 </head>
 
 <body>
+    <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
+        <div class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lgcollapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <!--
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i data-feather="maximize"></i>
+              </a></li>
+              -->
+            <li>
+              <form class="form-inline mr-auto">
+                <div class="search-element">
+                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200">
+                  <button class="btn" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+        
+        <!--NavBar-->
+        <ul class="navbar-nav navbar-right">
+            <!--Inbox-->
+            <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
+              <span class="badge headerBadge1">
+                6 </span> </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">
+                  Messages
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-message">
+                <a href="#" class="dropdown-item">
+                    <span class="dropdown-item-avatar text-white">
+                        <img alt="image" src="/images/users/user-1.png" class="rounded-circle">
+                    </span>
+                    <span class="dropdown-item-desc">
+                        <span class="message-user">JohnDeo</span>
+                        <span class="time messege-text">Please check your mail !!</span>
+                        <span class="time">2 Min Ago</span>
+                    </span>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <span class="dropdown-item-avatar text-white">
+                        <img alt="image" src="/images/users/user-2.png" class="rounded-circle">
+                    </span>
+                    <span class="dropdown-item-desc">
+                        <span class="message-user">Sarah Smith</span> <span class="time messege-text">Request for leave application</span>
+                        <span class="time">5 Min Ago</span>
+                    </span>
+                </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <!--Notifications-->
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+              class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+            </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">Notifications
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <a href="#" class="dropdown-item">
+                  <span class="dropdown-item-icon bg-info text-white"> <i class="fas fa-bell"></i></span>
+                  <span class="dropdown-item-desc"> Welcome to TODO
+                    <span class="time">Yesterday</span>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <!--User-->
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+              <!-- Display user image if uploaded, otherwise show default placeholder -->
+              <img alt="image" 
+                   src="<%= user && user.profileImage ? user.profileImage : '/images/default-user.png' %>" 
+                   class="user-img-radious-style">
+              <span class="d-sm-none d-lg-inline-block username-text"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right pullDown">
+              <div class="dropdown-title">Hello <%= user ? user.username : 'User' %></div>
+              <a href="/profile" class="dropdown-item has-icon"> 
+                <i class="fas fa-user"></i> Profile 
+              </a>
+              <a href="/" class="dropdown-item has-icon"> 
+                <i class="fas fa-bolt"></i>Activities
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/logout" class="dropdown-item has-icon text-danger"> 
+                <i class="fas fa-sign-out-alt"></i>Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html"> <img alt="image" src="/images/logo.png" class="header-logo" /> <span class="logo-name">ToDo</span></a>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="menu-header">Main</li>
+            <li class="dropdown <%= currentPage === 'today' ? 'active' : '' %>">
+              <a href="/" class="nav-link"><i data-feather="monitor"></i><span>Today</span></a>
+            </li>
+            <li class="dropdown <%= currentPage === 'upcoming' ? 'active' : '' %>">
+              <a href="/upcoming" class="nav-link"><i data-feather="layout"></i><span>Upcoming</span></a>
+            </li>
+            <li class="dropdown <%= currentPage === 'add-task' ? 'active' : '' %>">
+              <a href="/add-task" class="nav-link"><i data-feather="plus-circle"></i><span>Add Task</span></a>
+            </li>
+            <li class="dropdown <%= currentPage === 'filters' ? 'active' : '' %>">
+              <a href="filters.html" class="nav-link"><i data-feather="grid"></i><span>Filters and Labels</span></a>
+            </li>
+            <li class="menu-header">My Projects</li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="hash"></i><span>Fitness</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="hash"></i><span>Groceries</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/list" class="nav-link"><i data-feather="hash"></i><span>Apointments</span></a>
+            </li>
+            <li class="menu-header">My Team</li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="hash"></i><span>New Brand</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="hash"></i><span>Website Update</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="hash"></i><span>Product Roadmap</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="hash"></i><span>Meeting Agenda</span></a>
+            </li>
+            <li class="menu-header">Others</li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="trash-2"></i><span>Trash</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i data-feather="check-circle"></i><span>Completed</span></a>
+            </li>
+
+          </ul>
+        </aside>
+      </div>

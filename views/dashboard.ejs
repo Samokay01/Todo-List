@@ -1,0 +1,163 @@
+<%- include("header") -%>
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="row ">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Today</h5>
+                          <h2 class="mb-3 font-18">10</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="images/banner/1.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Scheduled</h5>
+                          <h2 class="mb-3 font-18">10</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="images/banner/2.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Flagged</h5>
+                          <h2 class="mb-3 font-18">1</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="images/banner/3.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Completed</h5>
+                          <h2 class="mb-3 font-18">8</h2>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="images/banner/4.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>          
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Today Tasks</h4>
+                  <div class="card-header-form">
+                    <form>
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>S/N</th>
+                          <th>Task Name</th>
+                          <th>Assign Date</th>
+                          <th>Due Date</th>
+                          <th>Priority</th>
+                          <th>Action</th>
+                          <th>Completed</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <% tasks.forEach((task, index) => { %>
+                        <tr data-index="<%= index %>">
+                          <td><%= index + 1 %></td>
+                          <td><%= task.taskName %></td>
+                          <td><%= task.assignDate.toISOString().split('T')[0] %></td>
+                          <td><%= task.dueDate.toISOString().split('T')[0] %></td>
+                          <td>
+                            <% let badgeClass = ""; %>
+                            <% if (task.priority.toLowerCase() === "high") { %>
+                              <% badgeClass = "badge-danger"; %>
+                            <% } else if (task.priority.toLowerCase() === "average") { %>
+                              <% badgeClass = "badge-warning"; %>
+                            <% } else if (task.priority.toLowerCase() === "low") { %>
+                              <% badgeClass = "badge-success"; %>
+                            <% } %>
+                            <div class="badge <%= badgeClass %>"><%= task.priority %></div>
+                          </td>
+                          <td>
+                            <a href="/edit-task/<%= task._id %>" class="btn btn-outline-primary">Edit</a>
+                            <form action="/delete-task/<%= task._id %>" method="POST" style="display:inline;">
+                              <button type="submit" class="btn btn-outline-primary">Delete</button>
+                            </form>
+                          </td>
+                          <td class="p-0 text-center">
+                            <div class="custom-checkbox custom-control">
+                              <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-<%= task._id %>" onchange="toggleTaskCompletion('<%= task._id %>')">
+                              <label for="checkbox-<%= task._id %>" class="custom-control-label">&nbsp;</label>
+                            </div>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+<%- include("footer") -%>

@@ -1,0 +1,164 @@
+<%- include("header") -%>
+<!-- Main Content -->
+<div class="main-content">
+  <section class="section">
+    <div class="section-body">
+      <div class="row mt-sm-4">
+        <div class="col-12 col-md-12 col-lg-4">
+          <div class="card author-box">
+            <div class="card-body">
+              <div class="author-box-center">
+                <img alt="image"  src="<%= user.profileImage || '/img/default-user.png' %>" class="rounded-circle author-box-picture">
+                <div class="clearfix"></div>
+                <div class="author-box-name">
+                  <a href="#"><%= user.fullName || 'nil' %></a>
+                </div>
+                <div class="author-box-job"><%= user.jobTitle || 'nil' %></div>
+              </div>
+              <div class="text-center">
+                <div class="author-box-description">
+                  <p><%= user.bio ? user.bio.substring(0, 100) + (user.bio.length > 100 ? '...' : '') : 'nil' %></p>
+                </div>
+                <div class="mb-2 mt-3">
+                  <div class="text-small font-weight-bold">Follow <%= user.fullName.split(' ')[0] %> On</div>
+                </div>
+                <!-- Social Media Links -->
+                <a href="#" class="btn btn-social-icon mr-1 btn-facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="btn btn-social-icon mr-1 btn-twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="btn btn-social-icon mr-1 btn-instagram"><i class="fab fa-instagram"></i></a>
+                <div class="w-100 d-sm-none"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4>Personal Details</h4>
+            </div>
+            <div class="card-body">
+              <div class="py-4">
+                <p class="clearfix">
+                  <span class="float-left">Full Name</span>
+                  <span class="float-right text-muted"><%= user.fullName || 'nil' %></span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">Username</span>
+                  <span class="float-right text-muted"><%= user.username || 'nil' %></span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">Birthday</span>
+                  <span class="float-right text-muted"><%= user.birthday ? user.birthday.toDateString() : 'nil' %></span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">Phone</span>
+                  <span class="float-right text-muted"><%= user.phone || 'nil' %></span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">Mail</span>
+                  <span class="float-right text-muted"><%= user.email || 'nil' %></span>
+                </p>
+                <p class="clearfix">
+                  <span class="float-left">Location</span>
+                  <span class="float-right text-muted"><%= user.location || 'nil' %></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-8">
+          <div class="card">
+            <div class="padding-20">
+              <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
+                    aria-selected="true">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
+                    aria-selected="false">Setting</a>
+                </li>
+              </ul>
+              <div class="tab-content tab-bordered" id="myTab3Content">
+                <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                        <p><%= user.bio %></p>
+                      </div>
+                      <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="profile-tab2">
+                        <form method="post" action="/update-profile" enctype="multipart/form-data" class="needs-validation">
+                          <div class="card-header">
+                            <h4>Edit Profile</h4>
+                          </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="form-group col-md-6 col-12">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" name="fullName" value="<%= user.fullName %>" required>
+                                <div class="invalid-feedback">
+                                  Please fill in the full name
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6 col-12">
+                                <label>Username</label>
+                                <input type="text" class="form-control" name="username" value="<%= user.username %>" required>
+                                <div class="invalid-feedback">
+                                  Please fill in the username
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-md-7 col-12">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email" value="<%= user.email %>" required>
+                                <div class="invalid-feedback">
+                                  Please fill in the email
+                                </div>
+                              </div>
+                              <div class="form-group col-md-5 col-12">
+                                <label>Phone</label>
+                                <input type="tel" class="form-control" name="phone" value="<%= user.phone %>">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-md-6 col-12">
+                                <label>Date of Birth</label>
+                                <input type="date" class="form-control" name="birthday" value="<%= user.birthday ? user.birthday.toISOString().split('T')[0] : '' %>">
+                                <div class="invalid-feedback">
+                                  Please fill in the date of birth
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6 col-12">
+                                <label>Job Title</label>
+                                <input type="text" class="form-control" name="jobTitle" value="<%= user.jobTitle %>">
+                                <div class="invalid-feedback">
+                                  Please fill in the job title
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-12">
+                                <label>Bio</label>
+                                <textarea class="form-control summernote-simple" name="bio"><%= user.bio %></textarea>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-12">
+                                <label>Profile Picture</label>
+                                <div id="image-preview" class="image-preview">
+                                  <label for="image-upload" id="image-label">Choose File</label>
+                                  <input type="file" name="profileImage" id="image-upload" accept="image/*"/>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+<%- include("footer") -%>
